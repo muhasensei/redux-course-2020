@@ -1,4 +1,4 @@
-import {INCREMENT, DECREMENT} from "./constants";
+import {INCREMENT, DECREMENT, ASYNC_INCREMENT} from "./constants";
 
 export function rootReducer(state, action) {
     switch (action.type) {
@@ -11,6 +11,11 @@ export function rootReducer(state, action) {
             return {
                 ...state,
                 counter: state.counter - 1,
+            };
+        case ASYNC_INCREMENT:
+            return {
+                ...state,
+                counter: state.counter + 1,
             };
         default:
             return state;
