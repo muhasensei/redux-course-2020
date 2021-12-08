@@ -1,30 +1,32 @@
 import './styles.css'
+import {createStore} from "./redux/createStore";
+import {rootReducer} from "./redux/rootReducer";
 
 const counter = document.getElementById('counter');
 const addBtn = document.getElementById('add');
 const subBtn = document.getElementById('sub');
 const asyncBtn = document.getElementById('async');
 
-let state = 0;
-function render(){
-    counter.textContent = state.toString();
-}
+const store = createStore(rootReducer, {
+    counter: 0,
+});
+
 
 addBtn.addEventListener('click', () => {
-    state++;
-    render();
+    store.dispatch({type: 'INCREMENT'});
 });
 
 subBtn.addEventListener('click', () => {
-    state--;
-    render();
+    store.dispatch({type: 'DECREMENT'});
 });
 
 asyncBtn.addEventListener('click', () => {
-    setTimeout(() => {
-        state++;
-        render();
-    }, 2000);
+
 });
 
-render();
+store.subscribe(() => {
+    const state = store.getState();
+    counter.textContent = state.counter;
+});
+
+store.dispatch({type: 'INIT'})
