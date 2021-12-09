@@ -1,5 +1,5 @@
 import './styles.css'
-import {applyMiddleware, createStore} from "redux";
+import {applyMiddleware, createStore, compose} from "redux";
 import {reducers} from "./redux/reducers";
 import {asyncIncrement, changeTheme, decrement, disableButtons, increment} from "./redux/actions";
 import thunk from 'redux-thunk';
@@ -12,7 +12,10 @@ const themeBtn = document.getElementById('theme');
 
 const store = createStore(
     reducers,
-    applyMiddleware(thunk, logger)
+    compose(
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+        applyMiddleware(thunk, logger),
+    ),
 );
 
 
